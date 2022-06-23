@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'; 
-import SignRecognizer from './signRecognizer';
+
 
 
 const ImageUploader = () => {
@@ -34,7 +34,7 @@ const ImageUploader = () => {
                         <img src={URL.createObjectURL(image)} alt=""/>
                     </div>
                     <div style={buttonStyle}><button onClick={classifyImage}>Classify</button></div>
-                    {classyfing && <SignRecognizer image={image}/>}
+                    
                 </div>
             )
             }

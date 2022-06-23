@@ -95,63 +95,63 @@ print(f"Data Shape   :{X.shape}\nLabels shape :{y.shape}")
 
 
 # Split the data into training and validation set
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=11)
-print("Train Shape: {}\nTest Shape : {}".format(X_train.shape, X_test.shape))
+# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=11)
+# print("Train Shape: {}\nTest Shape : {}".format(X_train.shape, X_test.shape))
 
 
-resnet = ResNet50(weights= None, include_top=False, input_shape= (img_rows,img_cols,img_channels))
-x = resnet.output
-x = GlobalAveragePooling2D()(x)
-x = Dropout(0.5)(x)
-predictions = Dense(nb_classes, activation= 'softmax')(x)
-model = Model(inputs = resnet.input, outputs = predictions)
+# resnet = ResNet50(weights= None, include_top=False, input_shape= (img_rows,img_cols,img_channels))
+# x = resnet.output
+# x = GlobalAveragePooling2D()(x)
+# x = Dropout(0.5)(x)
+# predictions = Dense(nb_classes, activation= 'softmax')(x)
+# model = Model(inputs = resnet.input, outputs = predictions)
 
 
-print(model.summary())
+# print(model.summary())
 
-model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+# model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
  
-model_check = ModelCheckpoint('best_model.h5', monitor='val_accuracy', verbose=0, save_best_only=True, mode='max')
+# model_check = ModelCheckpoint('best_model.h5', monitor='val_accuracy', verbose=0, save_best_only=True, mode='max')
 
-early = EarlyStopping(monitor='val_accuracy', min_delta=0, patience=5, verbose=0, mode='max', restore_best_weights=True)
+# early = EarlyStopping(monitor='val_accuracy', min_delta=0, patience=5, verbose=0, mode='max', restore_best_weights=True)
 
-reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=5, min_lr=0.001)
+# reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=5, min_lr=0.001)
 
-csv_logger = CSVLogger('train_log.csv', separator=',')
-
-
-n_epochs = 10
-history =  model.fit(X_train, y_train,  batch_size = 32, epochs = n_epochs, verbose = 1, 
-              validation_data = (X_test, y_test), callbacks = [model_check, early, reduce_lr, csv_logger])
-
-print('Saving model as h5...')
-model.save('TSC_model.h5')
-
-print('Saving model as json...')
-json_model = model.to_json()
-with open('TSC_json_model.json', 'w') as json_file:
-    json_file.write(json_model)
+# csv_logger = CSVLogger('train_log.csv', separator=',')
 
 
-loss, acc = model.evaluate(X_test, y_test)
-print('Accuracy: ', acc, '\nLoss    : ', loss)
+# n_epochs = 10
+# history =  model.fit(X_train, y_train,  batch_size = 32, epochs = n_epochs, verbose = 1, 
+#               validation_data = (X_test, y_test), callbacks = [model_check, early, reduce_lr, csv_logger])
+
+# print('Saving model as h5...')
+# model.save('TSC_model.h5')
+
+# print('Saving model as json...')
+# json_model = model.to_json()
+# with open('TSC_json_model.json', 'w') as json_file:
+#     json_file.write(json_model)
 
 
-q = len(list(history.history['loss']))
-plt.figure(figsize=(12, 6))
-sns.lineplot(x = range(1, 1+q), y = history.history['accuracy'], label = 'Accuracy')
-sns.lineplot(x = range(1, 1+q), y = history.history['loss'], label = 'Loss')
-plt.xlabel('#epochs')
-plt.ylabel('Training')
-plt.legend();
-plt.show()
+# loss, acc = model.evaluate(X_test, y_test)
+# print('Accuracy: ', acc, '\nLoss    : ', loss)
 
 
-plt.figure(figsize=(12, 6))
-sns.lineplot(x = range(1, 1+q), y = history.history['accuracy'], label = 'Train')
-sns.lineplot(x = range(1, 1+q), y = history.history['val_accuracy'], label = 'Validation')
-plt.xlabel('#epochs')
-plt.ylabel('Accuracy')
-plt.legend();
+# q = len(list(history.history['loss']))
+# plt.figure(figsize=(12, 6))
+# sns.lineplot(x = range(1, 1+q), y = history.history['accuracy'], label = 'Accuracy')
+# sns.lineplot(x = range(1, 1+q), y = history.history['loss'], label = 'Loss')
+# plt.xlabel('#epochs')
+# plt.ylabel('Training')
+# plt.legend();
+# plt.show()
 
-plt.show()
+
+# plt.figure(figsize=(12, 6))
+# sns.lineplot(x = range(1, 1+q), y = history.history['accuracy'], label = 'Train')
+# sns.lineplot(x = range(1, 1+q), y = history.history['val_accuracy'], label = 'Validation')
+# plt.xlabel('#epochs')
+# plt.ylabel('Accuracy')
+# plt.legend();
+
+# plt.show()

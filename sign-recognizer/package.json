@@ -1,8 +1,13 @@
 {
   "name": "sign-recognizer",
   "version": "0.1.0",
+  "proxy": "http://localhost:80/",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@mui/icons-material": "^5.8.4",
+    "@mui/material": "^5.8.5",
     "@tensorflow/tfjs": "^3.18.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
@@ -10,6 +15,8 @@
     "path": "^0.12.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-image-file-resizer": "^0.4.8",
+    "react-imgpro": "^1.4.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
