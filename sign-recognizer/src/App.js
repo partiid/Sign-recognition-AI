@@ -31,6 +31,17 @@ function App() {
   const imageRef = useRef();
   const visibleImageRef = useRef();
 
+  const loadModel = async () => {
+
+    setLoading(true);
+    const model = await tf.loadLayersModel('http://localhost/cnn_model/model.json');
+    setModel(model);
+    console.log(model);
+    console.log("Model loaded");
+    setLoading(false);
+
+  }
+
   const imageStyle = {
    display: 'none'
   }
@@ -42,16 +53,7 @@ function App() {
     justifyItems: 'center',
     alignItems: 'center'
   }
-  const loadModel = async () => {
-
-    setLoading(true);
-    const model = await tf.loadLayersModel('http://localhost/cnn_model/model.json');
-    setModel(model);
-    console.log(model);
-    console.log("Model loaded");
-    setLoading(false);
-
-  }
+ 
   useEffect(() => {
     loadModel();
   }, [])
@@ -102,6 +104,7 @@ function App() {
       }).sort(function (a, b){
         return b.prob - a.prob;
       }); 
+      console.log(top5);
       setPrediction({
         loading: false,
         result: top5[0].className

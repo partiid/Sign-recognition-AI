@@ -19,7 +19,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 dataPath = './myData'
 labels = './labels.csv'
 batch_size = 50
-steps_per_epoch = 1650
+steps_per_epoch = 937
 number_epochs = 15 #number of epochs
 tensor_size = (32, 32, 3)
 
@@ -91,7 +91,7 @@ for i in range(0, cols):
 print(f"Number of samples: {samples_num}")
 plt.figure(figsize=(12,4))
 plt.bar(range(0, classes_count), samples_num)
-plt.title("distribution of samples in dataset")
+plt.title("Number of samples per class")
 plt.xlabel("class number")
 plt.ylabel('number of images')
 plt.show()
@@ -114,8 +114,8 @@ def preprocess(img):
 
 
 x_train = np.array(list(map(preprocess, x_train)))
-x_validation = np.array(list(map(preprocess, x_validation)))
 x_test = np.array(list(map(preprocess, x_test)))
+x_validation = np.array(list(map(preprocess, x_validation)))
 
 x_train=x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
 x_validation=x_validation.reshape(x_validation.shape[0], x_validation.shape[1], x_validation.shape[2], 1)
@@ -168,7 +168,8 @@ def cnnModel():
 model = cnnModel()
 
 print(model.summary())
-history = model.fit(dataGen.flow(x_train, y_train, batch_size=batch_size), steps_per_epoch=936, epochs=number_epochs, validation_data=(x_validation, y_validation))
+history = model.fit(dataGen.flow(x_train, y_train, batch_size=batch_size),
+ steps_per_epoch=936, epochs=number_epochs, validation_data=(x_validation, y_validation))
 
 print('Saving model to json...')
 json_model = model.to_json()
