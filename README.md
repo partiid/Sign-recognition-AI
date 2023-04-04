@@ -1,6 +1,6 @@
 # Sign-recognition-AI
 
-Built with tensorflow and javascript 
+Built with tensorflow, pytorch, javascript 
 
 
 # Training
